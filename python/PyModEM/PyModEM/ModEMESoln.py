@@ -14,18 +14,37 @@ class ESolnData:
     z : np.ndarray
 
 class ESoln:
-
-    def __init__(self):
         
-        self._data = ESolnData(
-            gridType=None,
-            nx=0,
-            ny=0,
-            nz=0,
-            x=None,
-            y=None,
-            z=None
-        )
+    def __init__(self, data=None, fname=None):
+
+        if data is None:
+            self._data = ESolnData(
+                gridType=None,
+                nx=0,
+                ny=0,
+                nz=0,
+                x=None,
+                y=None,
+                z=None
+            )
+
+        if data is not None and fname is None:
+            self._data = data
+
+        if fname is not None:
+            self.read(fname)
+
+
+    def __sub__(self, other):
+        return ESoln(ESolnData(
+            'EDGE',
+            nx=self.nx - other.nx,
+            ny=self.ny - other.ny,
+            nz=self.nz - other.nz,
+            x=self.x - other.x,
+            y=self.y - other.y,
+            z=self.z - other.z
+        ))
 
     @property
     def nx(self) -> int:

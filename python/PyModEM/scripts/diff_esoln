@@ -1,0 +1,25 @@
+#!/usr/bin/env python3.14
+import argparse
+from PyModEM import ModEMESoln
+
+parser = argparse.ArgumentParser(description='Take the difference between two esoln files')
+parser.add_argument('file_A', help="Esoln file A", type=str)
+parser.add_argument('file_B', help="Esoln file B", type=str)
+parser.add_argument('-o', '--output',
+                    default='diff.esoln',
+                    help='output_file_name', 
+                    type=str, 
+                    nargs=1)
+
+args = parser.parse_args()
+
+file_A = args.file_A
+file_B = args.file_B
+output_fname = args.output
+
+esoln_a = ModEMESoln.ESoln(fname=file_A)
+esoln_b = ModEMESoln.ESoln(fname=file_B)
+
+
+diff = esoln_a - esoln_b
+diff.write(output_fname)
