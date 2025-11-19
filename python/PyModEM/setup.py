@@ -14,7 +14,9 @@ setup(
     include_package_data=True,
     name="PyModEM",
     packages=["PyModEM"],
-    scripts=["scripts/make_mesh",
+    scripts=[
+            "scripts/diff_esoln",
+            "scripts/make_mesh",
             "scripts/make_modem_data",
             "scripts/plot_mesh",
             "scripts/plot_mesh_2d",

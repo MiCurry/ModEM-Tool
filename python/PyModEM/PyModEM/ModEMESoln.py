@@ -83,9 +83,13 @@ class ESoln:
             self._data.gridType = str(file.read(80).decode('utf-8'))
 
             _ = struct.unpack('i', file.read(4)) # Fortran record handle - skip
-            xs = struct.iter_unpack('D', file.read(self.nx*16))
-            ys = struct.iter_unpack('D', file.read(self.ny*16))
-            zs = struct.iter_unpack('D', file.read(self.nz*16))
+
+            try:
+                xs = struct.iter_unpack('D', file.read(self.nx*16))
+                ys = struct.iter_unpack('D', file.read(self.ny*16))
+                zs = struct.iter_unpack('D', file.read(self.nz*16))
+            except Exception as e:
+                raise(NotImplementedError("Reading binary files with ModEMESoln.read() must be done with Python 3.14 (As previous versions are missing ability to unpack complex numbers)"))
 
             self._data.x = np.array([x[0] for x in xs])
             self._data.y = np.array([y[0] for y in ys])
